@@ -1,10 +1,12 @@
+// v1.0.0
+
 // ==========================================
 // Copyright 2013 Dataminr
 // Licensed under The MIT License
 // http://opensource.org/licenses/MIT
 // ==========================================
 
-define('Backbone.Morph',[
+define([
   'backbone',
   'underscore'
 ], function(Backbone, _) {
