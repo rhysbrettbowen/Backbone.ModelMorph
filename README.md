@@ -6,7 +6,8 @@ Allows the definition of a schema that will create a new model with computed pro
 
 var orig = new Backbone.Model({
 	firstName: 'fred',
-	lastName: 'smith'
+	lastName: 'smith',
+	title: 'Mr'
 });
 
 var morph = new Backbone.Morph(orig, {
@@ -19,6 +20,16 @@ var morph = new Backbone.Morph(orig, {
 			return name.split(' ');
 		},
 		require: ['firstName', 'lastName']
+	},
+	titledName: {
+		get: function(title, name) {
+			return title + ' ' + name;
+		},
+		set: function(name) {
+			return [name.substring(0,2), name.substring(3)];
+		},
+		// can use computed properties to compute more properties
+		require: ['title', 'fullName']
 	}
 });
 
