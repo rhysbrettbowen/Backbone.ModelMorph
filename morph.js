@@ -88,9 +88,20 @@ define([
   };
 
   Backbone.Morph = function (model, schema) {
+    var old_extend = function (obj) {
+      _.each(_.toArray(arguments).slice(1), function(source) {
+        if (source) {
+          for (var prop in source) {
+            obj[prop] = source[prop];
+          }
+        }
+      });
+      return obj;
+    }
+
     // create a new Morph model that uses the original model as a prototype
     var Morph = function() {};
-    _.extend(Morph.prototype, model, proto);
+    old_extend(Morph.prototype, model, proto);
     var morph = new Morph();
     morph._schema = schema;
     morph._model = model;
