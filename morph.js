@@ -43,11 +43,13 @@ define([
           return this._model.set(key, this._schema[key].set(value), options);
         // else we expect back an array of values to set each require
         var vals = this._schema[key].set(value);
-        _.extend(options, {silent: true});
-        _.each(vals, function(val, ind) {
-          this.set(this._schema[key].require[ind], val, options);
-        }, this);
-        this._model.change();
+        if (_.isArray(vals)) {
+            _.each(vals, function(val, ind) {
+              this._model.set(this._schema[key].require[ind], val, options);
+            }, this);
+        } else { // require only have one input, so one to one mapping
+            this._model.set(this._schema[key].require[0], vals, options);
+        }
       }
     },
     toJSON: function() {
